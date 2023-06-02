@@ -1,0 +1,25 @@
+﻿@using DemoMVC.Models.Html;
+@model Menu
+
+@{
+    var menu = Model;
+}
+
+@if(menu.SubMenus == null || !menu.SubMenus.Any())
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@menu.URL">@(menu.Title?.ToUpper())</a>
+    </li>
+}
+else
+{
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">@(menu.Title?.ToUpper())</a>
+            <ul class="dropdown-menu">
+                @foreach (var submenu in menu.SubMenus)
+                {
+                    <partial name="_List" model="@submenu" />
+                }
+            </ul>
+        </li>
+}

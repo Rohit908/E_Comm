@@ -1,0 +1,31 @@
+﻿@model List<Product>;
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Products</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-action="Upsert" asp-controller="Product" class="btn btn-primary"><i class="bi bi-plus"></i>Add Product</a>
+    </div>
+</div>
+
+<div class="mt-5">
+<table id="productTable" class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Price</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Cover Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+</div>
+
+@section Scripts{
+    <script src="~/js/Admin/product.js"></script>
+}
+
+

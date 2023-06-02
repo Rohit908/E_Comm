@@ -1,0 +1,151 @@
+﻿@using DemoMVC.Models.ViewModels;
+@model ProductVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Product.Id" />
+    <input type="hidden" asp-for="Product.ImageUrl" />
+    <div class="card">
+        <div class="card-header text-dark">
+            @(Model.Product.Id!=0?"Update":"Add") Product
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group mb-3">
+                    <div class="form-floating text-dark">
+                        <input type="text" class="form-control" asp-for="Product.Title" />
+                        <label>Title:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Title" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-floating text-dark">
+                        <textarea class="form-control" asp-for="Product.Description" rows="5"></textarea>
+                        <label>Description:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="text" class="form-control" asp-for="Product.ISBN" />
+                        <label>ISBN:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.ISBN" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="text" class="form-control" asp-for="Product.Author" />
+                        <label>Author:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Author" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="number" class="form-control" asp-for="Product.ListPrice" />
+                        <label>ListPrice:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="number" class="form-control" asp-for="Product.Price" />
+                        <label>Price:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="number" class="form-control" asp-for="Product.Price50" />
+                        <label>Price50:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Price50" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating text-dark">
+                        <input type="number" class="form-control" asp-for="Product.Price100" />
+                        <label>Price100:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Product.Price100" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label>Category:</label>
+                    <select class="form-select" asp-for="Product.CategoryId" asp-items="@Model.CategoryList">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <div>
+                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label>Cover Type:</label>
+                    <select class="form-select" asp-for="Product.CoverTypeId" asp-items="@Model.CoverTypeList">
+                        <option disabled selected>--Select Cover Type--</option>
+                    </select>
+                    <div>
+                        <span asp-validation-for="Product.CoverTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <fieldset style="all: revert;width:100%">
+                    <legend class="text-dark w-auto" style="all: revert;">
+                        Product Image
+                    </legend>
+                    <div class="row">
+                        <div class="form-group mb-3 col-6">
+                            <div class="text-dark">
+                                <input type="file" id="fileUpload" name="file" class="form-control" asp-for="Product.ImageUrl" />
+                            </div>
+                        </div>
+                        @if (@Model.Product.ImageUrl != null)
+                        {
+                            <div class="mb-3 col-6">
+                                <img src="~/@Model.Product.ImageUrl" width="40%" style="border-radius:5px; border:3px groove black" />
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="card-footer">
+            @if(Model.Product.Id!=0)
+            {
+                <input type="submit" value="Update" class="btn btn-success" />
+            }
+            else
+            {
+                <input type="submit" value="Add" onclick="return ValidateInput()" class="btn btn-success" />
+            }
+            <a class="btn btn-secondary" asp-action="Index">Back</a>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        function ValidateInput(){
+            if(!$("#fileUpload").val())
+            {
+                swal({icon:'error', title:'Oops',text:"Please Upload Product Image!"});
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+

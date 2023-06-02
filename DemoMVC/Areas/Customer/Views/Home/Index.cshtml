@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+ 
+@inject IOptions<RequestLocalizationOptions> LocOptions
+​
+@{
+    var test = "";
+}
+
+
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div id="main" style="display:flex;justify-content:center;">
+        <h1 id="h1" style="font-size:100px"><span id="span1"></span><span id="span2"></span></h1>
+    </div>
+</div>
+
+<div class="row pb-3">
+    @foreach(var product in @Model)
+    {
+        <div class="col-lg-3 shadow-lg m-2">
+            <div class="row p-2">
+                <div class="col-12 p-1">
+                    <div class="card">
+                        <img src="~/@product.ImageUrl" class="card-img-top rounded" />
+                    </div>
+                    <div class="card-body">
+                        <div class="pl-1">
+                            <p class="card-title h5">@product.Title</p>
+                            <p>@product.Description</p>
+                        </div>
+                        <div class="pl-1">
+                            <p class="card-title h6"><strike>@product.ListPrice</strike></p>
+                            <p>As low as: @product.Price50</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-info w-100">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

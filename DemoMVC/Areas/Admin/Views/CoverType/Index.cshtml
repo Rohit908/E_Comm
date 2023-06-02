@@ -1,0 +1,33 @@
+﻿@model List<CoverType>;
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Cover Type</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-action="Create" asp-controller="CoverType" class="btn btn-primary"><i class="bi bi-plus"></i>Add Cover Type</a>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var coverType in Model)
+        {
+            <tr>
+                <td width="80%">
+                    @coverType.Name
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@coverType.Id"><i class="bi bi-trash"></i> Delete</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@coverType.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
