@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using DemoMVC.DataAccess.Repository.IRepository;
 using DemoMVC.Models;
 using DemoMVC.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -28,6 +29,7 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserStore<IdentityUser> _userStore;
@@ -40,6 +42,7 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
             RoleManager<IdentityRole> roleManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
+            IUnitOfWork unitOfWork,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -47,6 +50,7 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
@@ -116,7 +120,9 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
             public string? State { get; set; }
             public string? PostalCode { get; set; }
             public string? PhoneNumber { get; set; }
-
+            public int CompanyId { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
 
         }
 
@@ -137,6 +143,11 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
                 {
                     Text = i,
                     Value = i
+                }),
+                CompanyList = _unitOfWork.Company.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
 
@@ -161,8 +172,12 @@ namespace DemoMVC.Web.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
+                if (Input.Role == SD.Role_Company)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
 
-        var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {

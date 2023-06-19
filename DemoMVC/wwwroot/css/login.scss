@@ -1,0 +1,125 @@
+﻿$backgroundUrl: url('https://images3.alphacoders.com/823/82317.jpg');
+$textColor: white;
+
+body{
+    width: 100vw;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: $backgroundUrl;
+    background-size: cover;
+    background-position:center;
+}
+
+section {
+    .form-box {
+        /*background-color: rgba(0,0,0,0.7);*/
+        border-radius: 20px;
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2em;
+        color: #fff;
+        text-align: center;
+    }
+
+    .inputbox {
+        position: relative;
+        margin: 30px 0;
+        width: 310px;
+        border-bottom: 2px solid #fff;
+    }
+
+    .inputbox label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        color: #fff;
+        font-size: 1em;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .inputbox input {
+        width: 100%;
+        height: 50px;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
+        padding: 0 35px 0 5px;
+        color: #fff;
+    }
+
+    input:focus ~ label,
+    input:valid ~ label {
+        top: -5px;
+    }
+
+    .inputbox ion-icon {
+        position: absolute;
+        right: 8px;
+        color: #fff;
+        font-size: 1.2em;
+        top: 20px;
+    }
+
+    .forget {
+        margin: -15px 0 15px;
+        font-size: .9em;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .forget label input {
+        margin-right: 3px;
+    }
+
+    .forget a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .forget a:hover {
+        text-decoration: underline;
+    }
+
+    button {
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        background: #fff;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+    }
+
+    .glow:hover {
+        box-shadow: 0px 0px 10px 2px #fff;
+    }
+
+    .text-glow:hover {
+        text-shadow: 0px 0px 5px #fff;
+    }
+
+    .register {
+        font-size: .9em;
+        color: #fff;
+        text-align: center;
+        margin: 25px 0 10px;
+    }
+
+    .register p a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .reg
+}

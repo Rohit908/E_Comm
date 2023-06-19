@@ -35,3 +35,20 @@ body {
     margin: auto 0.25rem;
     box-shadow: 0 -2px;
 }
+
+
+.rememberForgetDiv {
+    display: flex;
+    justify-content:space-between;
+}
+
+.inputWhitIcon{
+    position:relative;
+}
+
+.inputWhitIcon > ion-icon {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    right:1%;
+}

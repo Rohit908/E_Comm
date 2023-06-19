@@ -9,37 +9,48 @@
 <div class="row">
     <div class="col-md-6">
         <section>
-            <form id="account" method="post">
+            <form id="account" method="post" style="display:grid;grid-template-columns: 1fr;grid-template-rows: 1fr 1fr 3fr 1fr auto auto 200px;grid-gap:10px">
                 <h2>Use a local account to log in.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="text-dark">                
-                    <div class="form-floating mb-2">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                        <label asp-for="Input.Email" class="form-label"></label>
+                <div class="text-light">            
+                    <div class="mb-3">
+                        <div class="inputWhitIcon">
+                            <div class="form-floating">
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="Email" aria-required="true" />
+                                <label asp-for="Input.Email" class="form-label"></label>
+                            </div>
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </div>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-2">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                        <label asp-for="Input.Password" class="form-label"></label>
+                    <div class="mb-2">
+                        <div class="inputWhitIcon">
+                            <div class="form-floating">
+                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Password" aria-required="true" />
+                                <label asp-for="Input.Password" class="form-label"></label>
+                            </div>
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </div>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                 </div>
-                <div>
+                <div class="rememberForgetDiv">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe" class="form-label">
                             <input class="form-check-input" asp-for="Input.RememberMe" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
                 <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
+                    
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
@@ -83,5 +94,7 @@
 </div>
 
 @section Scripts {
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

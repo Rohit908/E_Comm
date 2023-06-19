@@ -1,0 +1,81 @@
+﻿@model Company
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="card">
+        <div class="card-header">
+            @(Model.Id!=0?"Update":"Add") Company
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" asp-for="Name" placeholder="Name" />
+                        <label>Name:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control" asp-for="StreetAddress" placeholder="Address" rows="5"></textarea>
+                        <label>Address:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-12">
+                    <div class="form-floating ">
+                        <input type="number" class="form-control" placeholder="." asp-for="PhoneNumber" />
+                        <label>Phone Number:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" placeholder="." asp-for="City" />
+                        <label>City:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" placeholder="." asp-for="State" />
+                        <label>State:</label>
+                    </div>
+                    <div>
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            @if(Model.Id!=0)
+            {
+                <input type="submit" value="Update" class="btn btn-success" />
+            }
+            else
+            {
+                <input type="submit" value="Add" onclick="return ValidateInput()" class="btn btn-success" />
+            }
+            <a class="btn btn-secondary" asp-action="Index">Back</a>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        function ValidateInput(){
+            return true;
+        }
+    </script>
+}
+

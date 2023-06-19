@@ -4,14 +4,14 @@
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <input type="hidden" asp-for="Product.Id" />
     <input type="hidden" asp-for="Product.ImageUrl" />
-    <div class="card">
-        <div class="card-header text-dark">
+    <div class="card text-light">
+        <div class="card-header">
             @(Model.Product.Id!=0?"Update":"Add") Product
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="form-group mb-3">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating">
                         <input type="text" class="form-control" asp-for="Product.Title" />
                         <label>Title:</label>
                     </div>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <textarea class="form-control" asp-for="Product.Description" rows="5"></textarea>
                         <label>Description:</label>
                     </div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="text" class="form-control" asp-for="Product.ISBN" />
                         <label>ISBN:</label>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="text" class="form-control" asp-for="Product.Author" />
                         <label>Author:</label>
                     </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="number" class="form-control" asp-for="Product.ListPrice" />
                         <label>ListPrice:</label>
                     </div>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="number" class="form-control" asp-for="Product.Price" />
                         <label>Price:</label>
                     </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="number" class="form-control" asp-for="Product.Price50" />
                         <label>Price50:</label>
                     </div>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3 col-6">
-                    <div class="form-floating text-dark">
+                    <div class="form-floating ">
                         <input type="number" class="form-control" asp-for="Product.Price100" />
                         <label>Price100:</label>
                     </div>
@@ -101,12 +101,12 @@
                     </div>
                 </div>
                 <fieldset style="all: revert;width:100%">
-                    <legend class="text-dark w-auto" style="all: revert;">
+                    <legend class=" w-auto" style="all: revert;">
                         Product Image
                     </legend>
                     <div class="row">
                         <div class="form-group mb-3 col-6">
-                            <div class="text-dark">
+                            <div class="">
                                 <input type="file" id="fileUpload" name="file" class="form-control" asp-for="Product.ImageUrl" />
                             </div>
                         </div>

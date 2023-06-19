@@ -20,12 +20,14 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="text-light">
-                    <div class="form-floating mb-2">
-                            <input asp-for="Input.Email" class="form-control" placeholder="email" autocomplete="username" aria-required="true" />
-                        <label asp-for="Input.Email"></label>
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
                     <div class="row">
+                        <div class="col-6">
+                            <div class="form-floating mb-2">
+                                <input asp-for="Input.Email" class="form-control" placeholder="email" autocomplete="username" aria-required="true" />
+                                <label asp-for="Input.Email"></label>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-2">
                                 <input asp-for="Input.Name" class="form-control" placeholder="name" autocomplete="new-password" aria-required="true" />
@@ -76,10 +78,17 @@
                         </div>
                         <div class="col-md-6">
                                 <div class="mb-2">
-                                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select form-select-lg text-light">
-                                    <option disabled selected>--Select Role--</option>
+                                    <select style="font-size:1rem !important;padding:16px 12px !important;border-radius:0.15rem;" asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select form-select-lg text-light">
+                                    <option disabled selected>Select Role</option>
                                 </select>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-2">
+                            <select style="font-size:1rem !important;padding:16px 12px !important;border-radius:0.15rem;display:none;" asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select form-select-lg text-light">
+                                <option disabled selected>Select Company</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -123,4 +132,18 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(x=>{
+            $('#Input_Role').change(()=>{
+                var selection = $('#Input_Role Option:Selected').text();
+                if(selection && selection=='Company'){
+                    $('#Input_CompanyId').show();
+                }
+                else{
+                    $('#Input_CompanyId').hide();
+                }
+            });
+        });
+    </script>
+
 }

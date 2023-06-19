@@ -1,139 +1,96 @@
-﻿//using DemoMVC.DataAccess.Repository.IRepository;
-//using DemoMVC.Models;
-//using DemoMVC.Models.ViewModels;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DemoMVC.DataAccess.Repository.IRepository;
+using DemoMVC.Models;
+using DemoMVC.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-//namespace DemoMVC.Web.Areas.Admin.Controllers
-//{
-    
-//    public class ProductController : Controller
-//    {
-//        private readonly IUnitOfWork _unitOfWork;
-//        private readonly IWebHostEnvironment _hostEnvironment;
+namespace DemoMVC.Web.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class CompanyController : Controller
+    {
+        private readonly IUnitOfWork _unitOfWork;
 
-//        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
-//        {
-//            _unitOfWork = unitOfWork;
-//            _hostEnvironment = hostEnvironment;
-//        }
-//        public IActionResult Index()
-//        {
-//            //IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll();
-//            return View();
-//        }
-//        public IActionResult Create()
-//        {
-//            return View();
-//        }
-//        [HttpPost]
-//        public IActionResult Create(Product model)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _unitOfWork.Product.Add(model);
-//                _unitOfWork.Save();
-//                TempData["success"] = "Cover Type Added";
-//                return RedirectToAction("Index");
-//            }
-//            return View(model);
-//        }
-//        public IActionResult Upsert(int? id)
-//        {
-//            ProductVM productVM = new()
-//            {
-//                Product = new(),
-//                CategoryList = _unitOfWork.Category.GetAll().Select(x => new SelectListItem
-//                {
-//                    Text = x.Name,
-//                    Value = x.Id.ToString()
-//                }),
-//                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(x => new SelectListItem
-//                {
-//                    Text = x.Name,
-//                    Value = x.Id.ToString()
-//                })
-//            };
+        public CompanyController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        public IActionResult Index()
+        {
+            IEnumerable<Company> objCompanyList = _unitOfWork.Company.GetAll();
+            return View(objCompanyList);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Company model)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Company.Add(model);
+                _unitOfWork.Save();
+                TempData["success"] = "Cover Type Added";
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+        public IActionResult Upsert(int? id)
+        {
+            Company company = new();
 
-//            if (id == null || id == 0)
-//            {
-//                return View(productVM);
-//            }
-//            else
-//            {
-//                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
-//                return View(productVM);
-//            }
-//        }
-//        [HttpPost]
-//        public IActionResult Upsert(ProductVM model, IFormFile? file)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                string wwwRootPath = _hostEnvironment.WebRootPath;
-//                if(file!=null)
-//                {
-//                    string fileName = Guid.NewGuid().ToString();
-//                    var uploads = Path.Combine(wwwRootPath, @"images\products");
-//                    var extention = Path.GetExtension(file.FileName);
+            if (id == null || id == 0)
+            {
+                return View(company);
+            }
+            else
+            {
+                company = _unitOfWork.Company.GetFirstOrDefault(p => p.Id == id);
+                return View(company);
+            }
+        }
+        [HttpPost]
+        public IActionResult Upsert(Company model)
+        {
+            if (ModelState.IsValid)
+            {
 
-//                    if(model.Product.ImageUrl!=null)
-//                    {
-//                        var oldImagePath = Path.Combine(wwwRootPath, model.Product.ImageUrl.TrimStart('\\'));
-//                        if(System.IO.File.Exists(oldImagePath))
-//                        {
-//                            System.IO.File.Delete(oldImagePath);
-//                        }
-//                    }
-                    
-//                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName+extention), FileMode.Create))
-//                    {
-//                        file.CopyTo(fileStream);
-//                    }
-//                    model.Product.ImageUrl = @"images\products\" + fileName + extention;
-//                }
+                if (model.Id == 0)
+                {
+                    _unitOfWork.Company.Add(model);
+                    TempData["success"] = "Company Added";
+                }
+                else
+                {
+                    _unitOfWork.Company.Update(model);
+                    TempData["success"] = "Company Updated";
+                }
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
 
-//                if (model.Product.Id == 0)
-//                {
-//                    _unitOfWork.Product.Add(model.Product);
-//                    TempData["success"] = "Product Added";
-//                }
-//                else
-//                {
-//                    _unitOfWork.Product.Update(model.Product);
-//                    TempData["success"] = "Product Updated";
-//                }
-//                _unitOfWork.Save();
-//                return RedirectToAction("Index");
-//            }
-//            return View(model);
-//        }
-        
-//        #region API EndPoint
-//        [HttpGet]
-//        public IActionResult GetAll()
-//        {
-//            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll("Category,CoverType");
-//            return Json(new { data = objProductList });
-//        }
+        #region API EndPoint
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            IEnumerable<Company> objCompanyList = _unitOfWork.Company.GetAll();
+            return Json(new { data = objCompanyList });
+        }
 
-//        [HttpDelete]
-//        public IActionResult Delete(int? id)
-//        {
-//            if (id == null || id == 0) return NotFound();
-//            var Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id);
-//            if (Product == null) return Json(new {success=false, message="Error while deleting"});
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0) return NotFound();
+            var Company = _unitOfWork.Company.GetFirstOrDefault(u => u.Id == id);
+            if (Company == null) return Json(new { success = false, message = "Error while deleting" });
 
-//            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, Product.ImageUrl.TrimStart('\\'));
-//            if (System.IO.File.Exists(oldImagePath))
-//            {
-//                System.IO.File.Delete(oldImagePath);
-//            }
-
-//            _unitOfWork.Product.Remove(Product);
-//            _unitOfWork.Save();
-//            return Json(new { success = true, message = "Cover Type Deleted" });
-//        }
-//        #endregion
-//    }
-//}
+            _unitOfWork.Company.Remove(Company);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Cover Type Deleted" });
+        }
+        #endregion
+    }
+}
